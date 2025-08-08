@@ -1,0 +1,13 @@
+Unit-I: Algorithm Analysis Techniques                                                                                           
+
+Notion of an algorithm , 
+Importance & role of algorithms in computing , 
+Important problem types ;
+Analysis of algorithmic efficiency ,
+Time and Space Complexity ,
+Asymptotic notations and their properties ; 
+Analysis framework:  Mathematical analysis for recursive and non-recursive algorithms; 
+String Algorithms: Naïve algorithm , 
+Rabin Karp Algorithm , 
+KMP Algorithm , 
+Manachers algorithm.
