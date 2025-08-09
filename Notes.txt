@@ -1,0 +1,68 @@
+What is Algorithm?
+    An algorithm is a set of unambiguous instructions that take an input, 
+    process it, and produce an output within a finite amount of time.
+
+Difference Between Algorithm & Program:
+    > Algorithm: Abstract logic (language-independent)
+    > Program: Implementation of an algorithm in a programming language.
+      Example:
+          > Algorithm : “Add A and B” (concept).
+          > Program : sum = a + b; (C++ code). 
+
+Every software — from calculators to AI systems — is based on algorithms.
+Example:
+    > Search bar → String Matching Algorithms (KMP, Rabin-Karp).
+    > E-commerce product sorting → Sorting Algorithms (QuickSort, MergeSort).          
+
+Good algorithms reduce time complexity and space usage.
+Example:
+  Sorting 1 million numbers:
+    > Bubble Sort: ~10¹² comparisons → hours.
+    > Merge Sort: ~2×10⁷ comparisons → seconds.
+
+Real World Examples:    
+
+| Domain         | Algorithm Example         | Role                    |
+| -------------- | ------------------------- | ----------------------- |
+| Search Engines | PageRank                  | Ranks web pages         |
+| Maps           | Dijkstra’s Algorithm      | Finds shortest path     |
+| Banking        | RSA Encryption            | Secure transactions     |
+| E-commerce     | QuickSort + Binary Search | Sorting & searching     |
+| AI/ML          | Backpropagation           | Neural network training |
+
+Problem Type:
+    1.Sorting 
+    2.Searching   
+    3.Optimization
+    4.Graph Problem
+    5.String Problem
+    6.Numerical
+    7.Geometric
+    8.Combinatorial
+    9.Divide and Conquer
+    10.Dynamic Programming.
+
+What is Algorithmic Efficiency?
+    Algorithmic efficiency measures how well an algorithm uses resources when solving a problem, mainly:
+        1.Time: How long the algorithm takes to run (running time)
+                It’s usually expressed in terms of the number of basic operations or steps the algorithm performs.
+        2.Space: How much memory it consumes (memory usage)
+
+Types of Input Affecting Efficiency:
+    1.Best Case: Input for which algorithm performs fastest
+    2.Worst Case: Input for which algorithm performs slowest (important for guarantees)
+    3.Average Case: Expected time over all inputs
+
+ Asymptotic Notations:
+   1.Big-O Notation O(g(n))     -> Upper bound (worst case)    -> f(n)≤c⋅g(n) for some constant c and large n.
+   2.Big-Omega Notation Ω(g(n)) -> Lower bound (best case)	   -> f(n)≥c⋅g(n) for some constant c, and large n.
+   3.Big-Theta Notation Θ(g(n)) -> Tight bound (average case)  ->(n) is both O(g(n)) and Ω(g(n)).
+
+
+
+
+
+
+
+ 
+	
