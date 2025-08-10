@@ -58,11 +58,158 @@ Types of Input Affecting Efficiency:
    2.Big-Omega Notation Ω(g(n)) -> Lower bound (best case)	   -> f(n)≥c⋅g(n) for some constant c, and large n.
    3.Big-Theta Notation Θ(g(n)) -> Tight bound (average case)  ->(n) is both O(g(n)) and Ω(g(n)).
 
+Non-recursive algorithms: Direct counting of operations
+Recursive algorithms: Solving recurrence relations
 
+Analysis of Non-Recursive Algorithms:
+Steps:
+    1.Identify basic operation
+            The most important step the algorithm repeats (e.g., comparison, addition).
+    2.Count frequency of basic operation
+            How many times it executes in terms of n.
+    3.Express as function of 𝑛
+            Get T(n), the running time.
+    4.Find asymptotic notation
+            Simplify to O, Ω,or Θ.
+Example:                                   
+    sum = 0;                                    
+    for (i = 0; i < n; i++)
+        sum += arr[i];
 
-
-
-
-
+Analysis of Recursive Algorithms:
+Steps:
+    1.Form Recurrence Relation
+        Write T(n) in terms of T(subproblem size).
+    2.Solve Recurrence
+     We solve using:
+        Substitution method
+        Recursion tree
+        Master theorem (quick formula for divide-and-conquer)
  
-	
+String Algorithms: Naïve String Matching Algorithm.
+Example:
+T = "AABAACAADAABAABA"
+P = "AABA"
+We want to find all positions where "AABA" occurs in T.
+
+Naive String Matching Algorithm:
+    1.Check the pattern at every possible position in the text.
+    2.Compare characters of pattern P with substring of text T one by one.
+    3.If all characters match → pattern found.
+    4.Otherwise → shift by 1 and repeat.
+
+Pseudocode:
+NaivePatternSearch(T, P):
+    n = length(T)
+    m = length(P)
+    for i = 0 to n - m:
+        match = true
+        for j = 0 to m - 1:
+            if T[i + j] != P[j]:
+                match = false
+                break
+        if match:
+            print("Pattern found at index", i)
+
+Example:
+T = "AABAACAADAABAABA", P = "AABA"
+i = 0 → matches (output: index 0)
+i = 1 → mismatch (B vs A)
+i = 2 → mismatch
+i = 3 → mismatch
+i = 9 → matches (output: index 9)
+i = 12 → matches (output: index 12)
+Output: Pattern found at indices 0, 9, 12            
+
+Time Complexity:
+    Worst case:O((n-m+1)m) ≈ O(nm)
+    Best case:O(n)
+    Space complexity:O(1)
+Space complexity:O(1)(no extra space needed)
+
+Advantages:
+    > Simple to implement
+    > No preprocessing required
+
+Disadvantages:
+    > Inefficient for large text and patterns
+    > Always shifts by 1, even when more can be skipped
+    > Redundant Comparisons
+
+Rabin-Karp Algorithm:
+    The Rabin-Karp algorithm improves over the Naïve approach by using
+    hashing to quickly compare substrings of the text with the pattern.
+  Instead of comparing each character one-by-one, it:
+    > Computes a hash value for the pattern.
+    > Computes hash values for each substring of the text of the same length.
+    > If hash values match → do a direct character comparison
+     (to confirm, avoiding false matches due to hash collisions).
+
+Working process:
+1.Preprocess:
+    Let m = pattern length, n = text length.
+    Compute hash of the pattern P.
+    Compute hash of the first m characters of the text T.     
+
+2.Slide the pattern over the text:
+    At each position, compare the hash of the text window with the pattern’s hash.
+    If hashes match → compare actual characters (to avoid false positives).
+    Update the hash for the next window using rolling hash.
+
+3. Rolling Hash Concept
+Instead of recomputing the hash from scratch for each window:
+Remove the effect of the first character.
+Add the effect of the new character.
+This makes hash update O(1).     
+
+Example(base d,mod q):
+       hash(next)=(d(hash(current)-T[i].h)+T[i+m]) mod q
+        where,
+            h = d^m-1 mod q
+            d = number of possible char
+            q = a prime number(to  reduce collision)
+
+Pseudocode:
+RabinKarp(T, P, d, q):
+    n = length(T)
+    m = length(P)
+    h = pow(d, m-1) % q
+    p_hash = 0
+    t_hash = 0
+
+    // Precompute hash for pattern and first window
+    for i in 0 to m-1:
+        p_hash = (d * p_hash + P[i]) % q
+        t_hash = (d * t_hash + T[i]) % q
+
+    for i in 0 to n - m:
+        if p_hash == t_hash:
+            if T[i : i+m] == P:
+                print("Pattern found at index", i)
+        if i < n - m:
+            t_hash = (d * (t_hash - T[i] * h) + T[i+m]) % q
+            if t_hash < 0:
+                t_hash += q
+
+Example:
+Example
+T = "GEEKS FOR GEEKS", P = "GEEK", d = 256, q = 101
+Compute pattern hash and first window hash.
+Slide across text, updating hash in O(1).
+When hashes match → verify with direct comparison.
+
+Complexity Analysis:
+Average Case: O(n+m)
+Worst Case:O(nm)
+Space Complexity:O(1).
+
+Advantages:
+    > Fast for multiple pattern searches in the same text.
+    > Efficient average-case performance.
+    > Rolling hash avoids re-computing from scratch.
+
+Disadvantage:
+    > Hash collisions possible → may cause false matches.
+    > Worst-case performance same as NaïveO(nm).
+    > Choosing a good modulus q is important to reduce collisions.
+
