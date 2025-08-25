@@ -213,3 +213,181 @@ Disadvantage:
     > Worst-case performance same as NaïveO(nm).
     > Choosing a good modulus q is important to reduce collisions.
 
+Growth Rate:
+    How quickly the running time (or memory usage) of an algorithm 
+    increases when the input size increases. 
+
+|   Complexity   |   Name            |      Example                                 |   Growth Behavior                               |
+| -------------- | ----------------- | -------------------------------------------- | ----------------------------------------------- |
+|     O(1)       | Constant Time     | Accessing an array element by index          | Always takes same time regardless of input size |
+|     O(log n)   | Logarithmic Time  | Binary Search                                | Grows slowly even for large inputs              |
+|     O(n)       | Linear Time       | Traversing an array                          | Time grows directly with input size             |
+|     O(n log n) | Linearithmic Time | Merge Sort, Quick Sort (avg case)            | Slightly slower than linear, but still good     |
+|     O(n²)      | Quadratic Time    | Bubble Sort, Selection Sort                  | Slow for large inputs                           |
+|     O(2ⁿ)      | Exponential Time  | Solving Towers of Hanoi, Brute-force subsets | Becomes impossible for even medium inputs       |
+|     O(n!)      | Factorial Time    | Traveling Salesman (brute force)             | Completely impractical except for tiny inputs   |
+
+What is a Recurrence Relation?
+    A recurrence relation is an equation that defines a problem in terms
+    of its smaller subproblems.It tells us how the solution grows step by step.
+
+Why We Use Recurrence?
+    > To analyze recursive algorithms like Merge Sort, Binary Search, Tower of Hanoi, etc.
+    > Helps find exact or approximate time complexity.
+
+Formula:
+    T(n) = a.T(n/b) + f(n)    
+
+Methods to solve recurrence relations:
+    > Substitution Method
+    > Recursion Tree Method
+    > Master Theorem
+
+|        Method           |                 When to Use                        |                  Advantages                    |                          Disadvantages                                 |                          Example                           |
+| ----------------------- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------- |
+|   Substitution Method   | When you can guess the solution form.              | Very flexible, works for many problems.        | Needs a correct guess before proof; guessing can be tricky.            | $T(n) = T(n-1) + 1 \Rightarrow O(n)$                       |
+|    Recursion Tree       | When you want to visualize the work at each level. | Gives a clear picture; good for understanding. | Can be messy for complex recurrences.                                  | Merge Sort: $T(n) = 2T(n/2) + O(n) \Rightarrow O(n\log n)$ |
+|    Master Theorem       | When the recurrence fits $T(n) = aT(n/b) + f(n)$.  | Quick and formula-based.                       | Cannot handle all forms (e.g., variable split, non-polynomial $f(n)$). | Merge Sort, Binary Search                                  |
+
+Knuth–Morris–Pratt (KMP) string matching algorithm:
+Problem KMP Solves:
+Given:
+A text T of length n
+A pattern P of length m
+Goal:
+Find all occurrences of P in T efficiently.
+
+Why KMP is Better?
+Naïve approach: For each position in T, check the pattern character-by-character.
+Time complexity: O(mn) in worst case.
+
+KMP: Avoids re-checking characters in T that we already know match.
+Time complexity: O(n+m).
+
+Main Idea:
+KMP uses a prefix function (also called LPS = Longest Prefix which is also a Suffix) to skip unnecessary comparisons.
+
+LPS Array:
+For each index i in the pattern, LPS[i] stores the length of the longest prefix of P which is also a suffix of P[0...i].
+Helps decide where to jump in the pattern when a mismatch happens.
+
+Example:
+Pattern: "ABABAC"
+LPS array: [0, 0, 1, 2, 3, 0]
+
+LPS Construction
+Steps:
+Start with len = 0 (length of the current matching prefix) and i = 1.
+If P[i] == P[len], increment both and set LPS[i] = len.
+If mismatch and len > 0, set len = LPS[len-1].
+If mismatch and len = 0, set LPS[i] = 0 and move i forward.
+
+Pattern Matching Using LPS:
+Start scanning T and P from the beginning.
+If characters match, move both pointers.
+If j == m (pattern matched):
+Record the starting index
+Set j = LPS[j-1] to continue searching.
+If mismatch:
+If j > 0, set j = LPS[j-1].
+Else, move i forward.
+
+5. Complexity
+LPS computation: O(m)
+Pattern matching: O(n)
+Total: O(n+m)
+
+6. Example
+Text: "ABABDABACDABABCABAB"
+Pattern: "ABABCABAB"
+
+Steps:
+Compute LPS → [0,0,1,2,0,1,2,3,4]
+Scan text and jump using LPS on mismatches
+Matches found at indices: 10
+
+7. Pseudocode
+
+void computeLPS(string pat, int m, int lps[]) {
+    int len = 0, i = 1;
+    lps[0] = 0;
+    while (i < m) {
+        if (pat[i] == pat[len]) {
+            lps[i++] = ++len;
+        } else {
+            if (len != 0)
+                len = lps[len - 1];
+            else
+                lps[i++] = 0;
+        }
+    }
+}
+
+void KMPSearch(string pat, string txt) {
+    int m = pat.size(), n = txt.size();
+    int lps[m];
+    computeLPS(pat, m, lps);
+
+    int i = 0, j = 0;
+    while (i < n) {
+        if (pat[j] == txt[i]) { i++; j++; }
+        if (j == m) {
+            cout << "Pattern found at index " << i - j << endl;
+            j = lps[j - 1];
+        } else if (i < n && pat[j] != txt[i]) {
+            if (j != 0) j = lps[j - 1];
+            else i++;
+        }
+    }
+}
+
+
+Manacher’s Algorithm:
+Purpose:
+Find the longest palindromic substring in a string in O(n) time.
+
+Why not brute force?
+Brute force: Check all substrings → O(n³) time (or O(n²) with better checking).
+Manacher’s: Smartly reuses palindrome info to solve in O(n).
+
+Core Idea:
+Transform the string to handle odd and even length palindromes uniformly.
+
+Example: "abba" → #a#b#b#a# (insert # between each char and at ends).
+Keep track of:
+C → center of current palindrome
+R → right boundary of current palindrome
+P[i] → radius (half-length) of palindrome centered at position i
+
+Mirror concept: If we already know a palindrome around C,
+the palindrome at a symmetric position i' (mirror of i) can help reduce checks.
+
+Expand: Try to expand palindrome centered at i beyond known info.
+
+Steps:
+Transform input → T.
+Initialize P[] = 0 for all positions.
+For each i in T:
+Find mirror index → mirror = 2*C - i.
+If i is inside the current right boundary R,
+set P[i] = min(R - i, P[mirror]).
+Expand around i while characters match.
+If expanded palindrome goes beyond R,
+update C and R.
+Find the maximum P[i] → gives the longest palindrome in T.
+Convert back to original string indexing.
+
+Example:
+String: "abba"
+Transform: #a#b#b#a#
+Iterations will find longest palindrome #a#b#b#a# with radius 4.
+Convert → "abba"
+
+Complexity:
+Time: O(n)
+Space: O(n) (due to transformed array and P[]).
+
+Drawbacks:
+    > Implementation is tricky for beginners.
+    > Not as intuitive as KMP or Rabin–Karp.
+
