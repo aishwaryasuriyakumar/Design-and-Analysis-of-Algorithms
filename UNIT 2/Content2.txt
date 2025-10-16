@@ -1,0 +1,18 @@
+Unit-II: Brute Force and Divide-And-Conquer     
+
+Brute force: 
+    Selection sort , 
+    String matching  , 
+    Exhaustive search  ,
+    Boyer Moore algorithm ,
+    Travelling salesman problem , 
+    Knapsack problem  ,
+    Assignment problem ,
+    Huffman codes and 
+    data compression .
+
+Divide and Conquer:
+    Binary search ,
+    Quick sort , 
+    Heap sort and
+    Multiplication of large integer .
