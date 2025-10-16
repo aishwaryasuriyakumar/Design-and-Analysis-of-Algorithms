@@ -1,0 +1,59 @@
+Brute Force Algorithm:
+
+Definition:
+    A Brute Force algorithm is a straightforward approach that tries all possible 
+    solutions to solve a problem. It does not use shortcuts or optimizations—it relies
+    purely on computational power and exhaustive search.
+
+
+Characteristics:
+
+    1.Simple to understand and implement.
+    2.Guaranteed to find a solution if one exists.
+    3.Inefficient for large inputs—time complexity is usually high.
+    4.Often used as a baseline to compare with optimized algorithms. 
+
+Pros:
+    Easy to implement.
+    Always finds the correct solution.
+    Good for small problem sizes or as a learning tool.
+
+Cons:
+    Very slow for large input sizes.
+    High time and sometimes space complexity.
+    Not practical for real-world large datasets.      
+
+Selection Sort:
+
+Definition:
+    Selection Sort is a simple comparison-based sorting algorithm.
+    It repeatedly selects the minimum (or maximum) element from the unsorted portion of the array and places it in the correct position in the sorted portion.
+    It works in-place, meaning it doesn’t need extra memory.   
+
+Algorithm:
+    for i = 0 to n-1
+    min_index = i
+    for j = i+1 to n-1
+        if arr[j] < arr[min_index]
+            min_index = j
+    swap arr[i] and arr[min_index]
+
+Time Complexity:
+    Best case: O(n²) – comparisons always made
+    Worst case: O(n²) – same as above
+    Average case: O(n²)
+
+Space Complexity:
+    O(1) (in-place sorting)
+
+Stability: 
+    Not stable (can change relative order of equal elements)   
+
+Pros:
+    Simple and easy to implement.
+    Works in-place (no extra memory needed).
+
+Cons:
+    Very slow for large arrays (inefficient).
+Not stable by default.     
+     
