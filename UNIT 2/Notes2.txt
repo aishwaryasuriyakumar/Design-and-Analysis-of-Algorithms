@@ -57,3 +57,55 @@ Cons:
     Very slow for large arrays (inefficient).
 Not stable by default.     
      
+String Matching:
+
+Definition:
+    String Matching (or Pattern Matching) is the process of finding occurrences of a 
+    substring (pattern) within a larger string (text).
+
+    Text (T): The main string in which we search.
+    Pattern (P): The substring we are looking for. 
+    
+Naive (Brute Force) Approach:
+    The simplest method is to slide the pattern over the text and compare characters
+    one by one.
+
+Steps:
+    1.Start at the beginning of the text.
+    2.Compare the pattern with the current substring of the text.
+    3.If it matches, record the position.
+    4.Move one position forward and repeat until the end of the text.    
+
+Example
+
+Text: "ABABAC"
+Pattern: "ABA"
+
+Start Index	Comparison	Match?
+0	"ABA" vs "ABA"	✅ Yes, match at index 0
+1	"BAB" vs "ABA"	❌ No
+2	"ABA" vs "ABA"	✅ Yes, match at index 2
+3	"BAC" vs "ABA"	❌ No
+
+Result: Matches at index 0 and 2.
+
+Pseudocode:
+    for i = 0 to n - m
+    j = 0
+    while j < m and text[i+j] == pattern[j]
+        j = j + 1
+    if j == m
+        print "Pattern found at index", i
+
+Time Complexity:
+    Worst case: O(n × m) – all positions are checked
+    Best case: O(n) – when pattern length is 1 or mismatches early
+
+Space Complexity:
+    O(1) – no extra memory needed
+
+Applications:
+    1.Text editors (Ctrl+F search).
+    2.DNA sequence analysis.
+    3.Plagiarism detection.
+    4.Spam filtering.
