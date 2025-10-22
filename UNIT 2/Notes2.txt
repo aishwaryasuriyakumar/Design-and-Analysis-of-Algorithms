@@ -109,3 +109,58 @@ Applications:
     2.DNA sequence analysis.
     3.Plagiarism detection.
     4.Spam filtering.
+
+Exhaustive Search (Brute Force Search):
+
+Definition:
+    Exhaustive Search is a brute force technique that tries all possible solutions
+    to find the correct or optimal one. Also called Complete Search or Generate-and-Test.
+    Guarantees a solution if one exists, but can be very slow for large problem sizes.
+
+Algorithm:
+
+    1.Generate all possible candidate solutions.
+    2.Test each candidate against the problem constraints.
+    3.Select the best or valid solution.
+
+Note: This approach is often used in combinatorial problems.
+
+Examples:
+
+    1.Travelling Salesman Problem (TSP) – tries all permutations of cities to find the shortest route.
+    2.Knapsack Problem – tries all subsets of items to maximize value within weight limit.
+    3.Assignment Problem – tries all possible assignments to minimize total cost.
+    4.Puzzle solving – like Sudoku or N-Queens using backtracking (special case of exhaustive search).
+
+Pseudo Code:
+best_solution = None
+for each candidate in all_possible_solutions:
+    if candidate satisfies constraints:
+        if candidate better than best_solution:
+            best_solution = candidate
+return best_solution
+
+Time Complexity:
+
+Highly dependent on the problem:
+TSP → O(n!)
+Knapsack → O(2ⁿ)
+N-Queens → O(nⁿ)
+
+Space Complexity: Usually O(1) for simple generation, more if storing all solutions.
+
+Pros:
+    1.Simple and guarantees correct solution.
+    2.Useful for small problem sizes.
+
+Cons:
+
+    1.Very inefficient for large inputs.
+    2.Often replaced by dynamic programming, greedy, or heuristic algorithms for efficiency.
+
+Applications:
+
+    1.Combinatorial optimization.
+    2.Puzzle and game solving.
+    3.Testing all scenarios in security or AI.   
+     
