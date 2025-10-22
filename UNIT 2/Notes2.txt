@@ -163,4 +163,61 @@ Applications:
     1.Combinatorial optimization.
     2.Puzzle and game solving.
     3.Testing all scenarios in security or AI.   
-     
+
+Boyer-Moore String Matching Algorithm:
+
+Definition:
+
+    The Boyer-Moore algorithm is an efficient string searching algorithm used to find
+    a pattern within a text.It compares the pattern from right to left and uses heuristics
+    to skip unnecessary comparisons, making it much faster than the naive approach.
+
+Algorithm:
+    1.Right-to-Left Comparison
+    2.Instead of comparing left to right, it starts comparing the last character of the pattern first.
+    3.Heuristics to Skip Characters
+        i.Bad Character Rule → If a mismatch occurs, shift the pattern so that the mismatched character in text aligns with its last occurrence in the pattern.
+        ii.Good Suffix Rule → If a suffix of the pattern matches but a mismatch occurs, shift the pattern so that the matched suffix aligns with another occurrence in the pattern.
+    These heuristics allow large jumps in the text instead of checking every character.
+
+Example:
+    Text: "HERE IS A SIMPLE EXAMPLE"
+    Pattern: "EXAMPLE"
+
+        1.Start comparing from the last character of the pattern (E).
+        2.Mismatch? → Use bad character rule to shift pattern forward.
+        3.Repeat until a match is found.
+        4.Only parts of the text are checked, not every character, making it faster than naive search.
+
+Pseudo Code:
+
+i = 0
+while i <= n - m:           # n = text length, m = pattern length
+    j = m - 1
+    while j >= 0 and pattern[j] == text[i+j]:
+        j -= 1
+    if j < 0:
+        print("Pattern found at", i)
+        i += shift_for_full_match
+    else:
+        i += max(bad_char_shift, good_suffix_shift)
+
+Time Complexity:
+    Best case: O(n/m) → pattern skips large sections
+    Worst case: O(n × m) → rare, depends on text and pattern
+    Average case: Very fast, often O(n)
+
+Space Complexity: O(m + alphabet_size) → for precomputed tables
+
+Pros:
+    1.Much faster than naive search for large texts and patterns.
+    2.Skips unnecessary comparisons using heuristics.
+
+Cons:
+    1.Complex to implement compared to naive search.
+    2.Worst case can still be slow in some specific patterns.
+
+Applications:
+    1.Text editors and search engines.
+    2.DNA sequence analysis.
+    3.Plagiarism detection.     
